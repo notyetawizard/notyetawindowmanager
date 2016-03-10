@@ -1,5 +1,5 @@
 # notyetawindowmanager
-A dynamic window manager made with lua and wmutils.
+A dynamic window pseudomanager made with lua and wmutils.
 
 Dependencies:
 - libwm-git
