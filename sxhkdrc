@@ -2,65 +2,64 @@
 # bspwm hotkeys #
 #################
 
-super + alt + Escape
-	bspc quit
+#super + alt + Escape
+#	bspc quit
 
 #Close focused window
-super + q
-	bspc window -c
+#super + q
+#	bspc window -c
 
 #Equalize (default ratios) or balance (all even area)
-super + {e,b}
-	bspc desktop -{E,B}
+#super + {e,b}
+#	bspc desktop -{E,B}
 
 #Rotation
-super + {g,l}
-	bspc desktop -R {90, 270}
+#super + {g,l}
+#	bspc desktop -R {90, 270}
 
-super + {c,r}
-	bspc desktop -C {forward, backward}
+#super + {c,r}
+#	bspc desktop -C {forward, backward}
 
 #Switch focus between float and tiled
-super + Tab
-	/home/owl/.config/sxhkd/superTab.sh
+#super + Tab
+#	/home/owl/.config/sxhkd/superTab.sh
 
 #Focus, swap, or preselect with HTNS
-super + {h,t,n,s}
-	~/.config/sxhkd/superHTNSfloating.sh {h,t,n,s}
+#super + {h,t,n,s}
+#	~/.config/sxhkd/superHTNSfloating.sh {h,t,n,s}
 
 #TODO: Add control to move floating window with Ctrl HTNS
-super + {shift + ,ctrl +}{h,t,n,s}
-	bspc window -{s,p} {left,up,down,right}
+#super + {shift + ,ctrl +}{h,t,n,s}
+#	bspc window -{s,p} {left,up,down,right}
 
 #Focus on desktop by number, ctrl to send window to
-super + {1-4}
-	bspc desktop -f ^{1-4}
+#super + {1-4}
+#	bspc desktop -f ^{1-4}
 
-super + shift + {1-4}
-	bspc window -d ^{1-4}
+#super + shift + {1-4}
+#	bspc window -d ^{1-4}
 
 #Play with the gaps
-super + {bracketleft, bracketright}
-	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+ 4, - 4} ))
+#super + {bracketleft, bracketright}
+#	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+ 4, - 4} ))
 
 #Reset gaps to default or no gap "fake fullscreen"
-super + {0, 9}
-	bspc config -d focused window_gap {-2, 32}
+#super + {0, 9}
+#	bspc config -d focused window_gap {-2, 32}
 
 #Transparency adjustments
-super + ctrl + {bracketleft, bracketright}
-	compton-trans -c {-5, +5}
+#super + ctrl + {bracketleft, bracketright}
+#	compton-trans -c {-5, +5}
 
 #Mouse focus, sizing, moving
-~button1
-	bspc pointer -g focus
+#~button1
+#	bspc pointer -g focus
 
-super + button{1-3}
-	bspc pointer -g {move, resize_side, resize_corner}
+#super + button{1-3}
+#	bspc pointer -g {move, resize_side, resize_corner}
 
-super + !button{1-3}
-	bspc pointer -t %i %i
-
+super + !button{1,3}
+    {wmv, wrs} -a %i %i $(pfw)
 
 ###################################
 # (mostly) wm independent hotkeys #
