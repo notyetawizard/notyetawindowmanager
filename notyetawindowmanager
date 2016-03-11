@@ -11,6 +11,7 @@ TODO:
 
 local border_active = {"800080", "4"}
 local border_inactive = {"008080", "4"}
+
 local function activate(wid)
     os.execute("wtf "..wid)
     os.execute("chwso -r "..wid)
@@ -21,23 +22,21 @@ local function deactivate(wid)
     os.execute("chwb -c "..border_inactive[1].." -s "..border_inactive[2].." "..wid)
 end
 
---Event handler?
+--Event handler
 --"wew -m 524336" shows enter + leaving windows, and creation/destruction events. Add the numbers from "wew -l" together to get the combos you want!
-local events = io.popen("wew -m 524336",r)
---read line by line in a loop, but *don't* skip lines accidentally!
+local x_events = io.popen("wew -m 524336", r)
 while true do
-    local event = events:read("*l")
+    local event = x_events:read("*l")
     local colon = event:find(":")
     local value = event:sub(1, colon-1)
     local wid = event:sub(colon+1)
-        print(event)
+    print(event)
     -- New window is created
     if value == "16" then
-        deactivate(wid)
+        activete(wid)
     elseif value == "7" then
         activate(wid)
     elseif value == "8" then
         deactivate(wid)
-    else print(event)
     end
 end
