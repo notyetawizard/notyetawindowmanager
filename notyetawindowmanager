@@ -22,21 +22,37 @@ local function deactivate(wid)
     os.execute("chwb -c "..border_inactive[1].." -s "..border_inactive[2].." "..wid)
 end
 
---Event handler
---"wew -m 524336" shows enter + leaving windows, and creation/destruction events. Add the numbers from "wew -l" together to get the combos you want!
-local x_events = io.popen("wew -m 524336", r)
+--Event Listener Thing
+local function listen(filename)
+    --This is a gross way to make sure the file is empty. I'm sure there's a better way...
+    os.execute("echo -n > "..filename)
+    --"wew -m 524336" shows enter + leaving windows, and creation/destruction events. Add the numbers from "wew -l" together to get the combos you want!
+    --Right now, I'mma put this in .xinitrc, because I'm ending up with dozens of wews running since I'm restarting this sooooo often XD
+    --Eventually, this could probably start it.
+    --os.execute("wew -m 524336 >> "..filename.."&")
+    return io.open(filename, "r+")
+end
+
+m_events = listen("m_events")
+--Okay, *now* I should be able to send other events! This should also make the loop tighter, as it's not waiting on wew. Dunno what that'll do to the resources being used, though :O
+
+--temp!
+m_events = io.popen("wew -m 524336")
+
 while true do
-    local event = x_events:read("*l")
-    local colon = event:find(":")
-    local value = event:sub(1, colon-1)
-    local wid = event:sub(colon+1)
-    print(event)
-    -- New window is created
-    if value == "16" then
-        activete(wid)
-    elseif value == "7" then
-        activate(wid)
-    elseif value == "8" then
-        deactivate(wid)
-    end
+    local event = m_events:read("*l")
+    --if event ~= nil then
+        local colon = event:find(":")
+        local value = event:sub(1, colon-1)
+        local wid = event:sub(colon+1)
+        print(event)
+        -- New window is created
+        if value == "16" then
+            activate(wid)
+        elseif value == "7" then
+            activate(wid)
+        elseif value == "8" then
+            deactivate(wid)
+        end
+    --end
 end

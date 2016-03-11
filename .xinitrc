@@ -4,6 +4,6 @@ sxhkd -m 1 -c /home/repos/notyetawindowmanager/sxhkdrc &
 xset -dpms b off
 xrdb ~/.Xresources &
 feh --bg-center ~/.wallpaper.jpg &1
-lua /home/repos/notyetawindowmanager/main.lua
+/home/repos/notyetawindowmanager/notyetawindowmanager
 
-exec wew
+exec wew -m 524336 >> /home/repos/notyetawindowmanager/m_events
