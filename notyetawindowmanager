@@ -7,6 +7,8 @@ TODO:
   - Manage the windows in a stack with chwso; when mouse enters, a window should maybe gain temporary focus, but only for mouse events like clicking and scrolling—though scrolling may work without focus, which would be nice. The window that *had* focus prior to the mouse entry should regain focus on keyboard events, perhaps?
   - Fancy border colours! I think the border on the (main) focused window should be bigger.
   - user defined grid, like parking spaces, with padding. Programs can have reserved spaces, and anything else will get out of their way. Windows that have defined spaces will automatically go to them, programs that don't may be left floating or find an unoccupied space. Should be able to be different per virtual desktop
+  - For window moving resizing with mouse, don't use `pfw` for the id, but the last window entered! Will need to pass into the event handler!
+  - Remove focus on mouse—it's bollocks—but only after replacing the mechanism! Perhaps a click, or super + click could still shift the focus, though.
 --]]
 
 local border_active = {"800080", "4"}
