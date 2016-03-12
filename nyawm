@@ -26,33 +26,32 @@ end
 
 --Event Listener Thing
 local function listen(filename)
-    --Make sure the named pipe is empty, to avoid stashed events.
-    os.execute("filename > /dev/null")
+    --remove, then create the fifo
+    --note: be fucking careful with the file you pick!
+    os.execute("rm "..filename)
+    os.execute("mkfifo "..filename)
     --"wew -m 524336" shows enter + leaving windows, and creation/destruction events. Add the numbers from "wew -l" together to get the combos you want!
-    --Right now, I'mma put this in .xinitrc, because I'm ending up with dozens of wews running since I'm restarting this sooooo often XD
     --Eventually, this could probably start it. Is there something better than `&` to make sure it dies if this does?
-    --os.execute("wew -m 524336 >> "..filename.."&")
-    return io.open(filename, "r")
+    os.execute("wew -m 524336 >> "..filename.."&")
+    return io.open(filename, "r+")
 end
 
 --
-m_events = listen("m_events")
+m_events = listen("/home/repos/notyetawindowmanager/m_events")
 --(install script, eventually) use `mkfifo m_test` to create a named pipe instead of a file, which will avoid the end of line problem.
 
 while true do
-    local event = m_events:read("*l")
-    --if event ~= nil then
-        local colon = event:find(":")
-        local value = event:sub(1, colon-1)
-        local wid = event:sub(colon+1)
-        print(event)
-        -- New window is created
-        if value == "16" then
-            activate(wid)
-        elseif value == "7" then
-            activate(wid)
-        elseif value == "8" then
-            deactivate(wid)
-        end
-    --end
+    local event = m_events:read("l")
+    local colon = event:find(":")
+    local value = event:sub(1, colon-1)
+    local wid = event:sub(colon+1)
+    print(event)
+    -- New window is created
+    if value == "16" then
+        activate(wid)
+    elseif value == "7" then
+        activate(wid)
+    elseif value == "8" then
+        deactivate(wid)
+    end
 end
